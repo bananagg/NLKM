@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.XiehouyuMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.Xiehouyu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="riddle" jdbcType="VARCHAR" property="riddle" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="check_state" jdbcType="TINYINT" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, riddle, answer, check_state, createtime, updatetime
+  </sql>
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from xiehouyu
+    where `is_delete` = 0
+    <if test="text != null and text != ''">
+      and (riddle = #{text} or answer like  CONCAT('%', #{text},'%'))
+    </if>
+  </select>
+
+  <select id="selecetByBatch" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from xiehouyu
+    where `is_delete` = 0
+    <if test="text != null and text != ''">
+      and (riddle = #{text} or answer like  CONCAT('%', #{text},'%'))
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xiehouyu
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xiehouyu
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.Xiehouyu">
+    insert into xiehouyu (id, riddle, answer, 
+      check_state, createtime, updatetime
+      )
+    values (#{id,jdbcType=INTEGER}, #{riddle,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{checkState,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.Xiehouyu" useGeneratedKeys="true"
+          keyProperty="id" keyColumn="id">
+    insert into xiehouyu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="riddle != null">
+        riddle,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="riddle != null">
+        #{riddle,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.Xiehouyu">
+    update xiehouyu
+    <set>
+      <if test="riddle != null">
+        riddle = #{riddle,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.Xiehouyu">
+    update xiehouyu
+    set riddle = #{riddle,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateCheckState" parameterType="java.util.Map">
+    update xiehouyu
+    set
+    <if test="state != null">
+      check_state = #{state},
+    </if>
+    <if test="updatetime != null">
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    </if>
+    where  id = #{xiehouyuId}
+  </update>
+
+  <update id="updateDelete" parameterType="java.util.Map">
+    update xiehouyu
+    set
+    <if test="state != null">
+      `is_delete` = #{state},
+    </if>
+    <if test="updatetime != null">
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    </if>
+    where  id = #{xiehouyuId}
+  </update>
+
+</mapper>

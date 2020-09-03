@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wake.nlkm.mapper.WordMapper">
+    <select id="queryWordCount" resultType="java.lang.Integer">
+        select count(*) from word
+        where `is_delete` = 0
+        <if test="word != null and word != ''">
+            and word = #{word}
+        </if>
+    </select>
+
+    <select id="queryWordByBatch" parameterType="java.lang.Integer" resultType="com.wake.nlkm.entity.Word">
+        select * from word
+        where `is_delete` = 0
+        <if test="word != null and word != ''">
+            and word = #{word}
+        </if>
+        limit #{offset}, #{limit}
+    </select>
+    <select id="queryWordByWordname" parameterType="java.lang.String" resultType="com.wake.nlkm.entity.Word">
+        select * from word where word = #{wordname} and `is_delete` = 0
+    </select>
+
+    <select id="queryWordByWordId" parameterType="java.lang.Integer" resultType="com.wake.nlkm.entity.Word">
+        select * from word where id = #{id} and `is_delete` = 0
+    </select>
+
+    <insert id="addWrodInfo" parameterType="com.wake.nlkm.entity.Word" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id" >
+        insert into word (word, pinyin, redical, stroke_count, traditional, is_huiyizi, is_xingshengzi,
+        is_rate_word, `level`, wubi, basic_mean, detail_mean, zuci, source, liju, synonym, antonym,
+        miyu, baike, createtime, updatetime) VALUE (#{word}, #{word_id}, #{pinyin}, #{redical}, #{stroke_count},
+        #{traditional}, #{is_huiyizi}, #{is_xingshengzi}, #{is_rate_word}, #{level}, #{wubi}, #{basic_mean},
+        #{detail_mean}, #{zuci}, #{source}, #{liju}, #{synonym}, #{antonym}, #{miyu}, #{baike}, #{createtime}, #{updatetime})
+    </insert>
+
+    <update id="updateWordInfo" parameterType="com.wake.nlkm.entity.Word">
+        update word set `pinyin`=#{pinyin}, `redical`=#{redical},
+        `stroke_count` = #{stroke_count}, `traditional`=#{traditional}, `is_huiyizi`=#{is_huiyizi},
+        `is_xingshengzi` = #{is_xingshengzi},
+        `is_rate_word` = #{is_rate_word}, `level`=#{level}, `wubi`=#{wubi}, `basic_mean`=#{basic_mean}, `detail_mean`=#{detail_mean},
+        `zuci` = #{zuci}, `source`=#{source}, `liju`=#{liju}, `synonym`=#{synonym}, `antonym`=#{antonym},
+        `miyu` = #{miyu}, `baike` = #{baike} , `updatetime`=#{updatetime} where `id` = #{wordId}
+    </update>
+
+    <update id="updateHuiyiziStateByWordName" parameterType="java.util.Map">
+        update word set `is_huiyizi` = #{state}, `updatetime`=#{updatetime} where `id` = #{wordId}
+    </update>
+
+    <update id="updateXingshengziStateByWordName" parameterType="java.util.Map">
+        update word set `is_xingshengzi` = #{state}, `updatetime`=#{updatetime} where `id` = #{wordId}
+    </update>
+
+    <update id="updateRateWordStateByWordName" parameterType="java.util.Map">
+        update word set `is_rate_word` = #{state}, `updatetime`=#{updatetime} where `id` = #{wordId}
+    </update>
+
+    <update id="updateWordLevelStateByWordName" parameterType="java.util.Map">
+        update word set `level` = #{level}, `updatetime`=#{updatetime} where `id` = #{wordId}
+    </update>
+
+    <update id="updateWordCheckState" parameterType="java.util.Map">
+        update word
+        set
+            `check_state` = #{state}
+            `updatetime` = #{updatetime}
+        where `id` = #{id}
+    </update>
+    <update id="updateWordDelete" parameterType="java.util.Map">
+        update word
+        set `is_delete` = #{state}
+        `updatetime` = #{updatetime}
+        where `id` = #{id}
+    </update>
+
+</mapper>

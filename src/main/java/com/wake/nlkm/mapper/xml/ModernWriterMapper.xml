@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.ModernWriterMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.ModernWriter">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="birthdate" jdbcType="VARCHAR" property="birthdate" />
+    <result column="deathdate" jdbcType="VARCHAR" property="deathdate" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="belief" jdbcType="VARCHAR" property="belief" />
+    <result column="ancestral_home" jdbcType="VARCHAR" property="ancestralHome" />
+    <result column="university" jdbcType="VARCHAR" property="university" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="production" jdbcType="VARCHAR" property="production" />
+    <result column="achievement" jdbcType="VARCHAR" property="achievement" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="check_state" jdbcType="INTEGER" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, name_zh, alias, nationality, nation, birthplace, birthdate, deathdate,
+    profession, belief, ancestral_home, university, introduce, production, achievement, is_delete, check_state,
+    createtime, updatetime
+  </sql>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from modern_writer
+    where `is_delete` = 0
+    <if test="name != null or name != ''">
+      and (`name` = #{name} or `name_zh` = #{name} or `alias` = #{name})
+    </if>
+  </select>
+
+  <select id="selectByBatch" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from modern_writer
+    where `is_delete` = 0
+    <if test="name != null or name != ''">
+      and (`name` = #{name} or `name_zh` = #{name} or `alias` = #{name})
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from modern_writer
+    where `name` = #{name} and `is_delete` = 0
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from modern_writer
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from modern_writer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.ModernWriter">
+    insert into modern_writer (id, `name`, name_zh,
+      alias, nationality, nation, 
+      birthplace, birthdate, deathdate, 
+      profession, belief, ancestral_home, 
+      university, introduce, production, 
+      achievement, createtime, updatetime
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR}, 
+      #{alias,jdbcType=VARCHAR}, #{nationality,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{birthplace,jdbcType=VARCHAR}, #{birthdate,jdbcType=VARCHAR}, #{deathdate,jdbcType=VARCHAR}, 
+      #{profession,jdbcType=VARCHAR}, #{belief,jdbcType=VARCHAR}, #{ancestralHome,jdbcType=VARCHAR}, 
+      #{university,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{production,jdbcType=VARCHAR}, 
+      #{achievement,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.ModernWriter">
+    insert into modern_writer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="nameZh != null">
+        name_zh,
+      </if>
+      <if test="alias != null">
+        alias,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="birthplace != null">
+        birthplace,
+      </if>
+      <if test="birthdate != null">
+        birthdate,
+      </if>
+      <if test="deathdate != null">
+        deathdate,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="belief != null">
+        belief,
+      </if>
+      <if test="ancestralHome != null">
+        ancestral_home,
+      </if>
+      <if test="university != null">
+        university,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="production != null">
+        production,
+      </if>
+      <if test="achievement != null">
+        achievement,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null">
+        #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null">
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deathdate != null">
+        #{deathdate,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="belief != null">
+        #{belief,jdbcType=VARCHAR},
+      </if>
+      <if test="ancestralHome != null">
+        #{ancestralHome,jdbcType=VARCHAR},
+      </if>
+      <if test="university != null">
+        #{university,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="production != null">
+        #{production,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null">
+        #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.ModernWriter">
+    update modern_writer
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null">
+        name_zh = #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null">
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="birthplace != null">
+        birthplace = #{birthplace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        birthdate = #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="deathdate != null">
+        deathdate = #{deathdate,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="belief != null">
+        belief = #{belief,jdbcType=VARCHAR},
+      </if>
+      <if test="ancestralHome != null">
+        ancestral_home = #{ancestralHome,jdbcType=VARCHAR},
+      </if>
+      <if test="university != null">
+        university = #{university,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="production != null">
+        production = #{production,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null">
+        achievement = #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.ModernWriter">
+    update modern_writer
+    set `name` = #{name,jdbcType=VARCHAR},
+      name_zh = #{nameZh,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      birthdate = #{birthdate,jdbcType=VARCHAR},
+      deathdate = #{deathdate,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
+      belief = #{belief,jdbcType=VARCHAR},
+      ancestral_home = #{ancestralHome,jdbcType=VARCHAR},
+      university = #{university,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      production = #{production,jdbcType=VARCHAR},
+      achievement = #{achievement,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateCheckState" parameterType="java.util.Map">
+    update modern_writer
+    set `check_state` = #{state},
+    `updatetime` = #{updatetime}
+    where id = #{writerId}
+  </update>
+
+  <update id="updateDelete" parameterType="java.util.Map">
+    update modern_writer
+    set `is_delete` = #{state},
+    `updatetime` = #{updatetime}
+    where id = #{writerId}
+  </update>
+</mapper>

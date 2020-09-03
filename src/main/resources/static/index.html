@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+<body>
+<div class="container">
+    <h3
+            th:text="|欢迎登录：|+${session.user_name}"></h3>
+    <h4>
+        <a th:href="@{/logout}">退出登录</a>
+    </h4>
+    <h4>
+        <div>
+            <p>以下是通过标签获得登录信息</p>
+            <p>
+                代码:
+                <th:block sec:authentication="principal.id"></th:block>
+            </p>
+            <p>
+                用户名:
+                <th:block sec:authentication="principal.username"></th:block>
+            </p>
+            <p>
+                角色:
+                <th:block sec:authentication="principal.authorities"></th:block>
+            </p>
+        </div>
+    </h4>
+    <div class="row clearfix">
+        <div class="col-md-8 column">
+            <div th:if="${#strings.contains(session.user_roles,'Admin_se')}">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">账号操作</a>
+                    <div class="list-group-item">
+                        <a href="http://localhost:8080/account/showall">查询全部账号</a>
+                    </div>
+                    <div class="list-group-item">
+                        <a href="http://localhost:8080/account/addForm">添加账号</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${#strings.contains(session.user_roles,'Member_se')}">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">用户操作</a>
+                    <div class="list-group-item">
+                        <a href="http://localhost:8080/user/showall">查询全部用户</a>
+                    </div>
+
+                    <div class="list-group-item">
+                        <a href="http://localhost:8080/user/showone">查询某个用户</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.GuwenMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.Guwen">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="dynasty" jdbcType="VARCHAR" property="dynasty" />
+    <result column="writer" jdbcType="VARCHAR" property="writer" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="shangxi" jdbcType="VARCHAR" property="shangxi" />
+    <result column="translation" jdbcType="VARCHAR" property="translation" />
+    <result column="audioUrl" jdbcType="VARCHAR" property="audiourl" />
+    <result column="check_state" jdbcType="TINYINT" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, dynasty, writer, content, type, remark, shangxi, translation, audioUrl, 
+    check_state, createtime, updatetime
+  </sql>
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from guwen
+    where `is_delete` = 0
+    <if test="title != null and title != ''">
+     and  match(title) against(#{title})
+    </if>
+  </select>
+  <select id="selectByBatch" parameterType="java.lang.Integer" resultType="com.wake.nlkm.entity.Guwen">
+    select
+    <include refid="Base_Column_List" />
+    from guwen
+    where `is_delete` = 0
+    <if test="title != null and title != ''">
+     and match(title) against(#{title}) ORDER BY title
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from guwen
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </select>
+  <select id="selectBytitle" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from guwen
+    where match(title) against(#{title}) and `is_delete` = 0 ORDER BY title
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from guwen
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.Guwen" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into guwen (id, title, dynasty, 
+      writer, content, type, 
+      remark, shangxi, translation, 
+      audioUrl, check_state, createtime, 
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{dynasty,jdbcType=VARCHAR}, 
+      #{writer,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{shangxi,jdbcType=VARCHAR}, #{translation,jdbcType=VARCHAR}, 
+      #{audiourl,jdbcType=VARCHAR}, #{checkState,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.Guwen" useGeneratedKeys="true" keyColumn="id"
+          keyProperty="id">
+    insert into guwen
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="dynasty != null">
+        dynasty,
+      </if>
+      <if test="writer != null">
+        writer,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="shangxi != null">
+        shangxi,
+      </if>
+      <if test="translation != null">
+        `translation`,
+      </if>
+      <if test="audiourl != null">
+        audioUrl,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="dynasty != null">
+        #{dynasty,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null">
+        #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="shangxi != null">
+        #{shangxi,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="audiourl != null">
+        #{audiourl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.Guwen">
+    update guwen
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="dynasty != null">
+        dynasty = #{dynasty,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null">
+        writer = #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="shangxi != null">
+        shangxi = #{shangxi,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        `translation` = #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="audiourl != null">
+        audioUrl = #{audiourl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.Guwen">
+    update guwen
+    set title = #{title,jdbcType=VARCHAR},
+      dynasty = #{dynasty,jdbcType=VARCHAR},
+      writer = #{writer,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      shangxi = #{shangxi,jdbcType=VARCHAR},
+      `translation` = #{translation,jdbcType=VARCHAR},
+      audioUrl = #{audiourl,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </update>
+
+  <update id="updateCheckState" parameterType="java.util.Map">
+    update guwen
+    set check_state = #{state}
+    where id = #{id} and `is_delete` = 0
+  </update>
+
+  <update id="updateDelete" parameterType="java.util.Map">
+    update guwen
+    set `is_delete` = 1
+    where id = #{id}
+  </update>
+
+</mapper>

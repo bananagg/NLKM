@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wake.nlkm.mapper.VocabularyMapper" >
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.Vocabulary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="word_id" property="wordId" jdbcType="VARCHAR" />
+    <result column="word" property="word" jdbcType="VARCHAR" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="basicmean" property="basicmean" jdbcType="VARCHAR" />
+    <result column="detailmean" property="detailmean" jdbcType="VARCHAR" />
+    <result column="synonym" property="synonym" jdbcType="VARCHAR" />
+    <result column="antonym" property="antonym" jdbcType="VARCHAR" />
+    <result column="baike" property="baike" jdbcType="VARCHAR" />
+    <result column="check_state" property="checkState" jdbcType="TINYINT" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, word_id, word, pinyin, `level`, basicmean, detailmean, synonym, antonym, baike,
+    check_state, createtime, updatetime
+  </sql>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(*) from vocabulary
+    where `is_delete` = 0
+    <if test="word != null and word != ''" >
+      and word = #{word}
+    </if>
+  </select>
+
+  <select id="selecetByOffset" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vocabulary
+    where `is_delete` = 0
+    <if test="word != null and word != ''" >
+      and word = #{word}
+    </if>
+    limit #{offset}, #{limit}
+  </select>
+
+  <select id="selectByWord" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vocabulary
+    where word = #{word} and `is_delete` = 0
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vocabulary
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vocabulary
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.Vocabulary" useGeneratedKeys="true" keyProperty="id"
+          keyColumn="id" >
+    insert into vocabulary (id, word_id, word, 
+      pinyin, level, basicmean, 
+      detailmean, synonym, antonym, 
+      baike, check_state, createtime, 
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{wordId,jdbcType=VARCHAR}, #{word,jdbcType=VARCHAR}, 
+      #{pinyin,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, #{basicmean,jdbcType=VARCHAR}, 
+      #{detailmean,jdbcType=VARCHAR}, #{synonym,jdbcType=VARCHAR}, #{antonym,jdbcType=VARCHAR}, 
+      #{baike,jdbcType=VARCHAR}, #{checkState,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.Vocabulary" useGeneratedKeys="true"
+          keyColumn="id" keyProperty="id">
+    insert into vocabulary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wordId != null" >
+        word_id,
+      </if>
+      <if test="word != null" >
+        word,
+      </if>
+      <if test="pinyin != null" >
+        pinyin,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="basicmean != null" >
+        basicmean,
+      </if>
+      <if test="detailmean != null" >
+        detailmean,
+      </if>
+      <if test="synonym != null" >
+        synonym,
+      </if>
+      <if test="antonym != null" >
+        antonym,
+      </if>
+      <if test="baike != null" >
+        baike,
+      </if>
+      <if test="checkState != null" >
+        check_state,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wordId != null" >
+        #{wordId,jdbcType=VARCHAR},
+      </if>
+      <if test="word != null" >
+        #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="basicmean != null" >
+        #{basicmean,jdbcType=VARCHAR},
+      </if>
+      <if test="detailmean != null" >
+        #{detailmean,jdbcType=VARCHAR},
+      </if>
+      <if test="synonym != null" >
+        #{synonym,jdbcType=VARCHAR},
+      </if>
+      <if test="antonym != null" >
+        #{antonym,jdbcType=VARCHAR},
+      </if>
+      <if test="baike != null" >
+        #{baike,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null" >
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.Vocabulary" >
+    update vocabulary
+    <set >
+      <if test="wordId != null" >
+        word_id = #{wordId,jdbcType=VARCHAR},
+      </if>
+      <if test="word != null" >
+        word = #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="basicmean != null" >
+        basicmean = #{basicmean,jdbcType=VARCHAR},
+      </if>
+      <if test="detailmean != null" >
+        detailmean = #{detailmean,jdbcType=VARCHAR},
+      </if>
+      <if test="synonym != null" >
+        synonym = #{synonym,jdbcType=VARCHAR},
+      </if>
+      <if test="antonym != null" >
+        antonym = #{antonym,jdbcType=VARCHAR},
+      </if>
+      <if test="baike != null" >
+        baike = #{baike,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null" >
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.Vocabulary" >
+    update vocabulary
+    set
+      word = #{word,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      `level` = #{level,jdbcType=VARCHAR},
+      basicmean = #{basicmean,jdbcType=VARCHAR},
+      detailmean = #{detailmean,jdbcType=VARCHAR},
+      synonym = #{synonym,jdbcType=VARCHAR},
+      antonym = #{antonym,jdbcType=VARCHAR},
+      baike = #{baike,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateLevel" parameterType="com.wake.nlkm.entity.Vocabulary" >
+    update vocabulary
+    set
+      `level` = #{level,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where `word` = #{word}
+  </update>
+  <update id="updateLevelById" parameterType="com.wake.nlkm.entity.Vocabulary" >
+    update vocabulary
+    set
+      `level` = #{level,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where `id` = #{id}
+  </update>
+
+  <update id="updateCheckState" parameterType="java.util.Map" >
+    update vocabulary
+    set
+      `check_state` = #{state},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where `word` = #{word}
+  </update>
+
+  <update id="updateCheckStateById" parameterType="java.util.Map" >
+    update vocabulary
+    set
+      `check_state` = #{state},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where `id` = #{id}
+  </update>
+
+  <update id="updateDelete" parameterType="java.util.Map">
+    update vocabulary
+    set
+    `is_delete` = #{state},
+    `updatetime` = #{updatetime}
+    where `id` = #{id}
+  </update>
+
+</mapper>

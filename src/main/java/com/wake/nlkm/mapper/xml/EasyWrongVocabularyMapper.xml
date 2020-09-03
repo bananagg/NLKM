@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.EasyWrongVocabularyMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.EasyWrongVocabulary">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="error_word" jdbcType="VARCHAR" property="errorWord" />
+    <result column="right_word" jdbcType="VARCHAR" property="rightWord" />
+    <result column="check_state" jdbcType="TINYINT" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, error_word, right_word, check_state, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from easy_wrong_vocabulary
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from easy_wrong_vocabulary
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.EasyWrongVocabulary">
+    insert into easy_wrong_vocabulary (id, error_word, right_word, 
+      check_state, createtime, updatetime
+      )
+    values (#{id,jdbcType=INTEGER}, #{errorWord,jdbcType=VARCHAR}, #{rightWord,jdbcType=VARCHAR}, 
+      #{checkState,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.EasyWrongVocabulary">
+    insert into easy_wrong_vocabulary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="errorWord != null">
+        error_word,
+      </if>
+      <if test="rightWord != null">
+        right_word,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="errorWord != null">
+        #{errorWord,jdbcType=VARCHAR},
+      </if>
+      <if test="rightWord != null">
+        #{rightWord,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.EasyWrongVocabulary">
+    update easy_wrong_vocabulary
+    <set>
+      <if test="errorWord != null">
+        error_word = #{errorWord,jdbcType=VARCHAR},
+      </if>
+      <if test="rightWord != null">
+        right_word = #{rightWord,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.EasyWrongVocabulary">
+    update easy_wrong_vocabulary
+    set error_word = #{errorWord,jdbcType=VARCHAR},
+      right_word = #{rightWord,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

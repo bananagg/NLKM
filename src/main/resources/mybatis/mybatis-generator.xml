@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--数据库驱动-->
+    <classPathEntry    location="/Users/gantaiyuan/maven/repository/mysql/mysql-connector-java/8.0.21/mysql-connector-java-8.0.21.jar"/>
+    <context id="context"    targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/article_comment_data?serverTimezone=UTC" userId="root" password="gan57124">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="com.wake.nlkm.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--生成映射文件存放位置-->
+        <sqlMapGenerator targetPackage="com.wake.nlkm.mapper.xml" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--生成Dao类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.wake.nlkm.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--生成对应表及类名-->
+        <table tableName="author" domainObjectName="Author" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="allusion" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="life" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="achievement" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="evaluation" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="simple_intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="detail_intro" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="confusable_word" domainObjectName="ConfusableWord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="easy_wrong_vocabulary" domainObjectName="EasyWrongVocabulary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="famous_aphorism" domainObjectName="FamousAphorism" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="sentence" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="good_sentence" domainObjectName="GoodSentence" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="guwen" domainObjectName="Guwen" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="shangxi" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="translation" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="guwen2_tag" domainObjectName="Guwen2Tag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="idiom" domainObjectName="Idiom" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="basic_mean" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="detail_mean" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="antonym" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="baike" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="miyu" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="idiom2_tag" domainObjectName="Idiom2Tag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="idiom_tag" domainObjectName="IdiomTag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="modern_writer" domainObjectName="ModernWriter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="introduce" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="production" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="achievement" javaType="java.lang.String" jdbcType="VARCHAR" />
+
+        </table>
+        <table tableName="poetry" domainObjectName="Poetry" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="translation" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="explanation" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="historical" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="appreciation" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="yi_zhu" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="poetry2_tag" domainObjectName="Poetry2Tag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="poetry_tag" domainObjectName="PoetryTag" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="radical" domainObjectName="Radical" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="rate_word" domainObjectName="RateWord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="similar_word" domainObjectName="SimilarWord" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="terms_defined" domainObjectName="TermsDefined" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="detail_mean" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="example" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="vocabulary" domainObjectName="Vocabulary" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <columnOverride column="basicmean" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="detailmean" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="synonym" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="antonym" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <columnOverride column="baike" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </table>
+        <table tableName="xiehouyu" domainObjectName="Xiehouyu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>

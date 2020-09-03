@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.PoetryMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.Poetry">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="authorid" jdbcType="VARCHAR" property="authorid" />
+    <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+    <result column="dynasty" jdbcType="VARCHAR" property="dynasty" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="translation" jdbcType="VARCHAR" property="translation" />
+    <result column="explanation" jdbcType="VARCHAR" property="explanation" />
+    <result column="historical" jdbcType="VARCHAR" property="historical" />
+    <result column="appreciation" jdbcType="VARCHAR" property="appreciation" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="yi_zhu" jdbcType="VARCHAR" property="yiZhu" />
+    <result column="check_state" jdbcType="TINYINT" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, alias, authorid, author_name, dynasty, type, content, translation, explanation, 
+    historical, appreciation, tags, yi_zhu, check_state, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from poetry
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from poetry
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.Poetry">
+    insert into poetry (id, title, alias, 
+      authorid, author_name, dynasty, 
+      type, content, translation, 
+      explanation, historical, appreciation, 
+      tags, yi_zhu, check_state, 
+      createtime, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{authorid,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{dynasty,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{translation,jdbcType=VARCHAR}, 
+      #{explanation,jdbcType=VARCHAR}, #{historical,jdbcType=VARCHAR}, #{appreciation,jdbcType=VARCHAR}, 
+      #{tags,jdbcType=VARCHAR}, #{yiZhu,jdbcType=VARCHAR}, #{checkState,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.Poetry">
+    insert into poetry
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="alias != null">
+        alias,
+      </if>
+      <if test="authorid != null">
+        authorid,
+      </if>
+      <if test="authorName != null">
+        author_name,
+      </if>
+      <if test="dynasty != null">
+        dynasty,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="translation != null">
+        translation,
+      </if>
+      <if test="explanation != null">
+        explanation,
+      </if>
+      <if test="historical != null">
+        historical,
+      </if>
+      <if test="appreciation != null">
+        appreciation,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="yiZhu != null">
+        yi_zhu,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null">
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null">
+        #{authorid,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null">
+        #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="dynasty != null">
+        #{dynasty,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null">
+        #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="historical != null">
+        #{historical,jdbcType=VARCHAR},
+      </if>
+      <if test="appreciation != null">
+        #{appreciation,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="yiZhu != null">
+        #{yiZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.Poetry">
+    update poetry
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null">
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="authorid != null">
+        authorid = #{authorid,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null">
+        author_name = #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="dynasty != null">
+        dynasty = #{dynasty,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        translation = #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="explanation != null">
+        explanation = #{explanation,jdbcType=VARCHAR},
+      </if>
+      <if test="historical != null">
+        historical = #{historical,jdbcType=VARCHAR},
+      </if>
+      <if test="appreciation != null">
+        appreciation = #{appreciation,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="yiZhu != null">
+        yi_zhu = #{yiZhu,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.Poetry">
+    update poetry
+    set title = #{title,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      authorid = #{authorid,jdbcType=VARCHAR},
+      author_name = #{authorName,jdbcType=VARCHAR},
+      dynasty = #{dynasty,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      translation = #{translation,jdbcType=VARCHAR},
+      explanation = #{explanation,jdbcType=VARCHAR},
+      historical = #{historical,jdbcType=VARCHAR},
+      appreciation = #{appreciation,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      yi_zhu = #{yiZhu,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

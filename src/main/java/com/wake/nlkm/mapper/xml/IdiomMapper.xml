@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.IdiomMapper">
+    <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.Idiom">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="word" jdbcType="VARCHAR" property="word"/>
+        <result column="pinyin" jdbcType="VARCHAR" property="pinyin"/>
+        <result column="basic_mean" jdbcType="VARCHAR" property="basicMean"/>
+        <result column="detail_mean" jdbcType="VARCHAR" property="detailMean"/>
+        <result column="source" jdbcType="VARCHAR" property="source"/>
+        <result column="example" jdbcType="VARCHAR" property="example"/>
+        <result column="synonym" jdbcType="VARCHAR" property="synonym"/>
+        <result column="antonym" jdbcType="VARCHAR" property="antonym"/>
+        <result column="baike" jdbcType="VARCHAR" property="baike"/>
+        <result column="miyu" jdbcType="VARCHAR" property="miyu"/>
+        <result column="check_state" jdbcType="TINYINT" property="checkState"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, word, pinyin, basic_mean, detail_mean, source, example, synonym, antonym,
+    baike, miyu, check_state, createtime, updatetime
+  </sql>
+
+    <select id="selecetCount" resultType="java.lang.Integer">
+    select count(*)
+    from idiom
+    where `is_delete` = 0
+    <if test="word != null and word != ''">
+        and word = #{word}
+    </if>
+
+  </select>
+
+    <select id="selectByBatch" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from idiom
+        where `is_delete` = 0
+        <if test="word != null and word != ''">
+            and word = #{word}
+        </if>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectByWord" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from idiom
+        where `word` = #{word} and `is_delete` = 0
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from idiom
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from idiom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="deleteByWord" parameterType="java.lang.String">
+--     delete from idiom
+--     where word = #{word}
+    update idiom
+    set `is_delete` = 1
+    where `word` = #{word}
+  </update>
+
+    <insert id="insert" parameterType="com.wake.nlkm.entity.Idiom" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+    insert into idiom ( word,
+      pinyin, basic_mean, detail_mean, 
+      source, example, synonym, 
+      antonym, baike, miyu, 
+      check_state, createtime, updatetime
+      )
+    values ( #{word,jdbcType=VARCHAR},
+      #{pinyin,jdbcType=VARCHAR}, #{basicMean,jdbcType=VARCHAR}, #{detailMean,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{example,jdbcType=VARCHAR}, #{synonym,jdbcType=VARCHAR}, 
+      #{antonym,jdbcType=VARCHAR}, #{baike,jdbcType=VARCHAR}, #{miyu,jdbcType=VARCHAR}, 
+      #{checkState,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+    </insert>
+    <insert id="insertSelective" parameterType="com.wake.nlkm.entity.Idiom" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+        insert into idiom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="word != null">
+                word,
+            </if>
+            <if test="pinyin != null">
+                pinyin,
+            </if>
+            <if test="basicMean != null">
+                basic_mean,
+            </if>
+            <if test="detailMean != null">
+                detail_mean,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="example != null">
+                example,
+            </if>
+            <if test="synonym != null">
+                synonym,
+            </if>
+            <if test="antonym != null">
+                antonym,
+            </if>
+            <if test="baike != null">
+                baike,
+            </if>
+            <if test="miyu != null">
+                miyu,
+            </if>
+            <if test="checkState != null">
+                check_state,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="updatetime != null">
+                updatetime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="word != null">
+                #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="pinyin != null">
+                #{pinyin,jdbcType=VARCHAR},
+            </if>
+            <if test="basicMean != null">
+                #{basicMean,jdbcType=VARCHAR},
+            </if>
+            <if test="detailMean != null">
+                #{detailMean,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="example != null">
+                #{example,jdbcType=VARCHAR},
+            </if>
+            <if test="synonym != null">
+                #{synonym,jdbcType=VARCHAR},
+            </if>
+            <if test="antonym != null">
+                #{antonym,jdbcType=VARCHAR},
+            </if>
+            <if test="baike != null">
+                #{baike,jdbcType=VARCHAR},
+            </if>
+            <if test="miyu != null">
+                #{miyu,jdbcType=VARCHAR},
+            </if>
+            <if test="checkState != null">
+                #{checkState,jdbcType=TINYINT},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.Idiom">
+        update idiom
+        <set>
+            <if test="word != null">
+                word = #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="pinyin != null">
+                pinyin = #{pinyin,jdbcType=VARCHAR},
+            </if>
+            <if test="basicMean != null">
+                basic_mean = #{basicMean,jdbcType=VARCHAR},
+            </if>
+            <if test="detailMean != null">
+                detail_mean = #{detailMean,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="example != null">
+                example = #{example,jdbcType=VARCHAR},
+            </if>
+            <if test="synonym != null">
+                synonym = #{synonym,jdbcType=VARCHAR},
+            </if>
+            <if test="antonym != null">
+                antonym = #{antonym,jdbcType=VARCHAR},
+            </if>
+            <if test="baike != null">
+                baike = #{baike,jdbcType=VARCHAR},
+            </if>
+            <if test="miyu != null">
+                miyu = #{miyu,jdbcType=VARCHAR},
+            </if>
+            <if test="checkState != null">
+                check_state = #{checkState,jdbcType=TINYINT},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.Idiom">
+    update idiom
+    set
+      word = #{word,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      basic_mean = #{basicMean,jdbcType=VARCHAR},
+      detail_mean = #{detailMean,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      example = #{example,jdbcType=VARCHAR},
+      synonym = #{synonym,jdbcType=VARCHAR},
+      antonym = #{antonym,jdbcType=VARCHAR},
+      baike = #{baike,jdbcType=VARCHAR},
+      miyu = #{miyu,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and `is_delete` = 0
+  </update>
+    <update id="updataByWord" parameterType="com.wake.nlkm.entity.Idiom">
+      update idiom
+      set
+        word = #{word,jdbcType=VARCHAR},
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+        basic_mean = #{basicMean,jdbcType=VARCHAR},
+        detail_mean = #{detailMean,jdbcType=VARCHAR},
+        source = #{source,jdbcType=VARCHAR},
+        example = #{example,jdbcType=VARCHAR},
+        synonym = #{synonym,jdbcType=VARCHAR},
+        antonym = #{antonym,jdbcType=VARCHAR},
+        baike = #{baike,jdbcType=VARCHAR},
+        miyu = #{miyu,jdbcType=VARCHAR},
+        check_state = #{checkState,jdbcType=TINYINT},
+        updatetime = #{updatetime,jdbcType=TIMESTAMP}
+      where word = #{word,jdbcType=INTEGER} and `is_delete` = 0
+    </update>
+
+    <update id="updateCheckState" parameterType="java.util.Map">
+    update idiom
+    set check_state = #{state},
+    updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where word = #{word} and `is_delete` = 0
+  </update>
+
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wake.nlkm.mapper.ConfusableWordMapper">
+  <resultMap id="BaseResultMap" type="com.wake.nlkm.entity.ConfusableWord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="word" jdbcType="VARCHAR" property="word" />
+    <result column="tongyintongdiao" jdbcType="VARCHAR" property="tongyintongdiao" />
+    <result column="tongyinyidiao" jdbcType="VARCHAR" property="tongyinyidiao" />
+    <result column="jinyintongdiao" jdbcType="VARCHAR" property="jinyintongdiao" />
+    <result column="jinyinyiao" jdbcType="VARCHAR" property="jinyinyiao" />
+    <result column="same_radical" jdbcType="VARCHAR" property="sameRadical" />
+    <result column="same_stroke" jdbcType="VARCHAR" property="sameStroke" />
+    <result column="check_state" jdbcType="TINYINT" property="checkState" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, word, tongyintongdiao, tongyinyidiao, jinyintongdiao, jinyinyiao, same_radical, 
+    same_stroke, check_state, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from confusable_word
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from confusable_word
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wake.nlkm.entity.ConfusableWord">
+    insert into confusable_word (id, word, tongyintongdiao, 
+      tongyinyidiao, jinyintongdiao, jinyinyiao, 
+      same_radical, same_stroke, check_state, 
+      createtime, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{word,jdbcType=VARCHAR}, #{tongyintongdiao,jdbcType=VARCHAR}, 
+      #{tongyinyidiao,jdbcType=VARCHAR}, #{jinyintongdiao,jdbcType=VARCHAR}, #{jinyinyiao,jdbcType=VARCHAR}, 
+      #{sameRadical,jdbcType=VARCHAR}, #{sameStroke,jdbcType=VARCHAR}, #{checkState,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wake.nlkm.entity.ConfusableWord">
+    insert into confusable_word
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="word != null">
+        word,
+      </if>
+      <if test="tongyintongdiao != null">
+        tongyintongdiao,
+      </if>
+      <if test="tongyinyidiao != null">
+        tongyinyidiao,
+      </if>
+      <if test="jinyintongdiao != null">
+        jinyintongdiao,
+      </if>
+      <if test="jinyinyiao != null">
+        jinyinyiao,
+      </if>
+      <if test="sameRadical != null">
+        same_radical,
+      </if>
+      <if test="sameStroke != null">
+        same_stroke,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="word != null">
+        #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="tongyintongdiao != null">
+        #{tongyintongdiao,jdbcType=VARCHAR},
+      </if>
+      <if test="tongyinyidiao != null">
+        #{tongyinyidiao,jdbcType=VARCHAR},
+      </if>
+      <if test="jinyintongdiao != null">
+        #{jinyintongdiao,jdbcType=VARCHAR},
+      </if>
+      <if test="jinyinyiao != null">
+        #{jinyinyiao,jdbcType=VARCHAR},
+      </if>
+      <if test="sameRadical != null">
+        #{sameRadical,jdbcType=VARCHAR},
+      </if>
+      <if test="sameStroke != null">
+        #{sameStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wake.nlkm.entity.ConfusableWord">
+    update confusable_word
+    <set>
+      <if test="word != null">
+        word = #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="tongyintongdiao != null">
+        tongyintongdiao = #{tongyintongdiao,jdbcType=VARCHAR},
+      </if>
+      <if test="tongyinyidiao != null">
+        tongyinyidiao = #{tongyinyidiao,jdbcType=VARCHAR},
+      </if>
+      <if test="jinyintongdiao != null">
+        jinyintongdiao = #{jinyintongdiao,jdbcType=VARCHAR},
+      </if>
+      <if test="jinyinyiao != null">
+        jinyinyiao = #{jinyinyiao,jdbcType=VARCHAR},
+      </if>
+      <if test="sameRadical != null">
+        same_radical = #{sameRadical,jdbcType=VARCHAR},
+      </if>
+      <if test="sameStroke != null">
+        same_stroke = #{sameStroke,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wake.nlkm.entity.ConfusableWord">
+    update confusable_word
+    set word = #{word,jdbcType=VARCHAR},
+      tongyintongdiao = #{tongyintongdiao,jdbcType=VARCHAR},
+      tongyinyidiao = #{tongyinyidiao,jdbcType=VARCHAR},
+      jinyintongdiao = #{jinyintongdiao,jdbcType=VARCHAR},
+      jinyinyiao = #{jinyinyiao,jdbcType=VARCHAR},
+      same_radical = #{sameRadical,jdbcType=VARCHAR},
+      same_stroke = #{sameStroke,jdbcType=VARCHAR},
+      check_state = #{checkState,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

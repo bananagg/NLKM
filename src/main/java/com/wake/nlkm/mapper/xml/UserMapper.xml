@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wake.nlkm.mapper.UserMapper">
+    <resultMap id="UserMap" type="com.wake.nlkm.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="accountNonExpired" property="accountNonExpired" jdbcType="TINYINT"/>
+        <result column="accountNonLocked" property="accountNonLocked" jdbcType="TINYINT"/>
+        <result column="credentialsNonExpired" property="credentialsNonExpired" jdbcType="TINYINT"/>
+        <result column="enabled" property="enabled" jdbcType="TINYINT"/>
+        <result column="createtime" property="createtime" jdbcType="DATE"/>
+        <result column="updatetime" property="updatetime" jdbcType="DATE"/>
+        <collection property="roles" ofType="com.wake.nlkm.entity.Role"
+                    select="com.wake.nlkm.mapper.UserMapper.findRoleById" column="{userId=id}"/>
+    </resultMap>
+    <resultMap id="roleMap" type="com.wake.nlkm.entity.Role">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="name_zh" property="name_zh"/>
+        <result column="createtime" property="createtime"/>
+        <result column="updatetime" property="updatetime"/>
+    </resultMap>
+
+    <select id="findUserByName" parameterType="String"  resultMap="UserMap">
+        SELECT a.id, a.username, a.`password`, a.accountNonExpired, a.accountNonLocked, a.credentialsNonExpired,
+        a.enabled, a.createtime, a.updatetime FROM t_user a WHERE  a.username = #{username};
+    </select>
+
+    <select id="findRoleById" resultType="com.wake.nlkm.entity.Role">
+        SELECT id, `name`, name_zh, createtime , updatetime FROM t_role WHERE id in (
+        SELECT t_role_id FROM t_user_role WHERE t_user_id = #{userId})
+    </select>
+</mapper>
